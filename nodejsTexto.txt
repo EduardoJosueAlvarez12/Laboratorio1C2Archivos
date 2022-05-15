@@ -1,0 +1,5 @@
+Node.js es un entorno en tiempo de ejecución multiplataforma
+Es de código abierto y para la capa del servidor.
+
+Está basado en el lenguaje de programación JavaScript.
+Nodejs funciona con asincronismo.

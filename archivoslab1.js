@@ -8,7 +8,8 @@ const opt = readLineSync.question(
   `Bienvenid@, elija una opcion:
       1)Leer un archivo
       2)Crear un archivo 
-      3)Convertir formato de un archivo:
+      3)Convertir formato de un archivo
+      4)Aniadir datos a un archivo
       `
 );
 
@@ -20,13 +21,14 @@ if (opt === "1") {
   const fileContent = fs.readFileSync(fileName);
   console.log(fileContent.toString());
 
+
 //Creacion de archivo
 } else if (opt === "2") {
-  fileName = readLineSync.question("Escriba el nombre de su archivo: ");
+  fileName = readLineSync.question("Escriba el nombre de su archivo sin extension: ");
   console.log(`--------------------------------------------------
                   Indicaciones:
                   1. Para terminar la linea y realizar un salto pulse enter.
-                  2. Para terminar de escribir el contenido del archivos escriba: .saveandexit.
+                  2. Para terminar de escribir el contenido del archivo escriba: .saveandexit.
                   ----------------------------------------------------
                   `);
   newLine = "";
@@ -44,7 +46,7 @@ if (opt === "1") {
   fs.writeFile(fileToWrite, content, (err) => {
     if (err) throw err;
 
-    console.log(`Archivo ${fileToWrite} guardado exitosamente :)`);
+    console.log(`Archivo ${fileToWrite} guardado exitosamente`);
   });
 
 
@@ -72,12 +74,12 @@ if (opt === "1") {
   if (conversOpt === "1") {
     const workBook = XLSX.readFile(inputFilename + ".xlsx");
     XLSX.writeFile(workBook, outputFilename + ".csv", { bookType: "csv" });
-    console.log(`Archivo ${outputFilename} guardado exitosamente :)`);
+    console.log(`Archivo ${outputFilename} guardado exitosamente`);
 
   } else if (conversOpt === "2") {
     const workBook = XLSX.readFile(inputFilename + ".csv");
     XLSX.writeFile(workBook, outputFilename + ".xlsx", { bookType: "xlsx" });
-    console.log(`Archivo ${outputFilename} guardado exitosamente :)`);
+    console.log(`Archivo ${outputFilename} guardado exitosamente`);
 
   } else if (conversOpt === "3") {
     var data = require("./" + inputFilename + ".json");
@@ -85,7 +87,7 @@ if (opt === "1") {
     const workBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workBook, workSheet, "Hoja1");
     XLSX.writeFile(workBook, outputFilename + ".xlsx");
-    console.log(`Archivo ${outputFilename} guardado exitosamente :)`);
+    console.log(`Archivo ${outputFilename} guardado exitosamente`);
 
   } else if (conversOpt === "4") {
     var data = require("./" + inputFilename + ".json");
@@ -93,7 +95,7 @@ if (opt === "1") {
     const workBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workBook, workSheet, "Hoja1");
     XLSX.writeFile(workBook, outputFilename + ".csv", { bookType: "csv" });
-    console.log(`Archivo ${outputFilename} guardado exitosamente :)`);
+    console.log(`Archivo ${outputFilename} guardado exitosamente`);
 
   } else if (conversOpt === "5") {
     const workBook = XLSX.readFile(inputFilename + ".xlsx");
@@ -102,7 +104,7 @@ if (opt === "1") {
     );
     fs.writeFile(outputFilename + ".json", JSON.stringify(jsonData), (err) => {
       if (err) throw err;
-      console.log(`Archivo ${outputFilename} guardado exitosamente :)`);
+      console.log(`Archivo ${outputFilename} guardado exitosamente`);
     });
 
   } else if (conversOpt === "6") {
@@ -112,11 +114,31 @@ if (opt === "1") {
     );
     fs.writeFile(outputFilename + ".json", JSON.stringify(jsonData), (err) => {
       if (err) throw err;
-      console.log(`Archivo ${outputFilename} guardado exitosamente :)`);
+      console.log(`Archivo ${outputFilename} guardado exitosamente`);
     });
   } else {
     console.log("Error: por favor seleccione una opción válida");
   }
+} else if (opt === '4') {
+  console.log(`-----------------------------------------------------------
+  Coloque el archivo que desee utilizar en el directorio raiz del proyecto
+  Nota: funciona con .csv, .txt y .docx
+  -----------------------------------------------------------`);
+  const fileToModify = readLineSync.question('Escriba el nombre del archivo incluyendo su extension: ');
+
+  const newData = readLineSync.question(`Escriba la informacion que desea agregar: 
+  `);
+
+  fs.appendFile(fileToModify, newData, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(`-----------------------------------------------------------
+      Archivo ${fileToModify} actualizado correctamente.
+      -----------------------------------------------------------`);
+    }
+  });
+
 } else {
-  console.log("Error: por favor seleccione una opción válida");
+  console.log("Error: por favor seleccione una opcion válida");
 }
